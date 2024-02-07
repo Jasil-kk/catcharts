@@ -1,0 +1,11 @@
+.customButton {
+  width: 642px;
+  height: 74px;
+  border-radius: 45px;
+  border: none;
+  background-color: var(--coral-pink);
+  font-size: 25px;
+  font-weight: 500;
+  color: var(--primary-white);
+  cursor: pointer;
+}
