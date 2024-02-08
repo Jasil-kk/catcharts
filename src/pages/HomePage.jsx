@@ -1,6 +1,7 @@
 import React from "react";
 import { Header } from "../components/Header/Header";
 import { Hero } from "../components/Hero/Hero";
+import { Gallery } from "../components/Gallery/Gallery";
 
 export const HomePage = () => {
   const style = {
@@ -16,6 +17,7 @@ export const HomePage = () => {
     <div style={style}>
       <Header />
       <Hero />
+      <Gallery/>
     </div>
   );
 };
