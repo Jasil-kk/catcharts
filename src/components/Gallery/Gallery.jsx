@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Gallery.module.css";
 import desert from "../../assets/desert.png";
 import city from "../../assets/city.png";
 import kababMenu from "../../assets/kebab-menu.svg";
+import { ImagePopup } from "../ImagePopup/ImagePopup";
 
 export const Gallery = () => {
+  const [show, setShow] = useState(false);
+
+  const handleOpenPopup =() => {
+    setShow(true)
+  }
+  const handleClosePopup =() => {
+    setShow(false)
+  }
   return (
+    <>
     <div className={classes.gallery_container}>
       {gallery?.map((item, index) => (
         <div key={index} className={classes.item_card}>
@@ -54,7 +64,7 @@ export const Gallery = () => {
             <button className={`${classes.card_btn} ${classes.like_btn}`}>
               Like
             </button>
-            <button className={`${classes.card_btn} ${classes.comment_btn}`}>
+            <button className={`${classes.card_btn} ${classes.comment_btn}`} onClick={handleOpenPopup}>
               Comment
             </button>
           </div>
@@ -111,6 +121,9 @@ export const Gallery = () => {
         </div>
       ))}
     </div>
+    {show &&
+    <ImagePopup handleCancel={handleClosePopup}/>}
+    </>
   );
 };
 
