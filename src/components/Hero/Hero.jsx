@@ -3,6 +3,7 @@ import classes from "./Hero.module.css";
 import curvedLines from "../../assets/curved-lines.png";
 import backgroundBox from "../../assets/background-box.png";
 import photographer from "../../assets/photographer.png";
+import { UploadImage } from "../UploadImage/UploadImage";
 
 export const Hero = () => {
   return (
@@ -17,12 +18,11 @@ export const Hero = () => {
         <label htmlFor="file">Upload Images</label>
         <img src={curvedLines} alt="" className={classes.curvedLines} />
         <img src={photographer} alt="" className={classes.photographer} />
-      <img src={backgroundBox} alt="" className={classes.right_box} />
-
+        <img src={backgroundBox} alt="" className={classes.right_box} />
       </div>
 
       <img src={backgroundBox} alt="" className={classes.left_box} />
-
+      <UploadImage/>
     </div>
   );
 };
