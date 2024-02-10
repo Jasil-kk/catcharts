@@ -1,0 +1,23 @@
+
+[
+  {
+    "id": 1,
+    "profile": "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "name": "Anitta K C",
+    "postedDate": "2 Days ago",
+    "imageUrl": "./desert.png",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "likedBy": "Liked by You and Srutheesh",
+    "isComment": true
+  },
+  {
+    "id": 2,
+    "profile": "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "name": "Paul K P",
+    "postedDate": "2 Days ago",
+    "imageUrl": "./city.png",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "likedBy": "Liked by You and Asha",
+    "isComment": false
+  }
+]

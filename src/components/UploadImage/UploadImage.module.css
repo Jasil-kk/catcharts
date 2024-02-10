@@ -2,6 +2,7 @@
   position: fixed;
   top: 35rem;
   right: 6rem;
+  z-index: 2;
 }
 .uploadImage {
   width: 40px;

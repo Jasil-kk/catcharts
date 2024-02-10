@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import classes from "./ImagePopup.module.css";
 import closeIcon from "../../assets/close.svg";
-import desert from "../../assets/desert.png";
 import heart from "../../assets/heart.png";
 import sendIcon from "../../assets/send.svg";
 import image1 from "../../assets/image-1.png";
@@ -23,7 +22,11 @@ export const ImagePopup = ({ handleCancel }) => {
           <img src={closeIcon} alt="Close" />
         </div>
         <div className={classes.first_section}>
-          <img src={desert} alt="Item" className={classes.picture} />
+          <img
+            src="https://images.pexels.com/photos/1770809/pexels-photo-1770809.jpeg?auto=compress&cs=tinysrgb&w=600"
+            alt="Item"
+            className={classes.picture}
+          />
           <div className={classes.content_section}>
             <div className={classes.top_section}>
               <div className={classes.avatar}>
