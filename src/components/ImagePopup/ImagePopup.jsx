@@ -78,7 +78,7 @@ export const ImagePopup = ({
               {imageData?.comments && imageData?.comments.length > 0 ? (
                 <>
                   <div className={classes.all_comments}>
-                    {imageData?.comments?.map((comment, index) => (
+                      {imageData?.comments.slice().reverse().map((comment, index) => (
                       <React.Fragment key={index}>
                         <div className={classes.comment_wrapper}>
                           <div className={classes.commenter_details}>

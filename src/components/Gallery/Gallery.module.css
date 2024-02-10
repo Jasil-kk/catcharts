@@ -49,7 +49,7 @@
   color: var(--black-color);
 }
 .date {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 400;
   color: var(--black-overlay);
 }

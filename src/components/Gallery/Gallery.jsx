@@ -110,7 +110,7 @@ export const Gallery = ({ imageData, setImageData }) => {
             </div>
             {showComments && (
               <div className={classes.comments_container}>
-                {image?.comments?.map((comment, index) => (
+                   {image?.comments.slice().reverse().map((comment, index) => (
                   <React.Fragment key={index}>
                     <div className={classes.comment_wrapper}>
                       <div className={classes.commenter_details}>

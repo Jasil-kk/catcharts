@@ -19,6 +19,12 @@
     "likedBy": "Srutheesh",
     "comments": [
       {
+        "commenter": "Simi K Sunny",
+        "commenterProfile": "https://images.pexels.com/photos/2773977/pexels-photo-2773977.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "date": "1 Week ago",
+        "text": "Nice Work...."
+      },
+      {
         "commenter": "Srutheesh",
         "commenterProfile": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600",
         "date": "1 Week ago",
@@ -31,12 +37,6 @@
             "text": "Thankuu...."
           }
         ]
-      },
-      {
-        "commenter": "Simi K Sunny",
-        "commenterProfile": "https://images.pexels.com/photos/2773977/pexels-photo-2773977.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "date": "1 Week ago",
-        "text": "Nice Work...."
       }
     ]
   }
