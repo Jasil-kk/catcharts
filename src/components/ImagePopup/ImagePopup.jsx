@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./ImagePopup.module.css";
 import closeIcon from "../../assets/close.svg";
 import heart from "../../assets/heart.png";
@@ -7,7 +7,31 @@ import image1 from "../../assets/image-1.png";
 import image2 from "../../assets/image-2.png";
 import image3 from "../../assets/image-3.png";
 
-export const ImagePopup = ({ handleCancel }) => {
+export const ImagePopup = ({
+  imageData,
+  liked,
+  toggleLike,
+  updateComments,
+  handleCancel,
+}) => {
+  const [commentText, setCommentText] = useState("");
+
+  // Adding Comment Function
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    if (commentText.trim() !== "") {
+      const newComment = {
+        commenterProfile:
+          "https://images.pexels.com/photos/3764119/pexels-photo-3764119.jpeg?auto=compress&cs=tinysrgb&w=600",
+        commenter: "You",
+        date: new Date().toLocaleString(),
+        text: commentText.trim(),
+      };
+      updateComments(newComment);
+      setCommentText("");
+    }
+  };
+
   useEffect(() => {
     document.body.classList.add(classes.bodyModalOpen);
     return () => {
@@ -23,82 +47,86 @@ export const ImagePopup = ({ handleCancel }) => {
         </div>
         <div className={classes.first_section}>
           <img
-            src="https://images.pexels.com/photos/1770809/pexels-photo-1770809.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src={imageData?.imageUrl}
             alt="Item"
             className={classes.picture}
           />
           <div className={classes.content_section}>
             <div className={classes.top_section}>
               <div className={classes.avatar}>
-                <img
-                  src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  alt="Profile"
-                />
+                <img src={imageData?.profile} alt="Profile" />
               </div>
               <div>
-                <h3 className={classes.name}>Asha Sunny</h3>
-                <p className={classes.date}>2 Days ago</p>
+                <h3 className={classes.name}>{imageData?.name}</h3>
+                <p className={classes.date}>{imageData?.postedDate}</p>
               </div>
               <button className={classes.report_btn}>Report</button>
             </div>
             <div className={classes.btn_container}>
-              <button className={`${classes.card_btn} ${classes.like_btn}`}>
-                <img src={heart} alt="Heart" className={classes.heart} /> Like
+              <button
+                className={`${classes.card_btn} ${liked && classes.like_btn}`}
+                onClick={toggleLike}
+              >
+                <img src={heart} alt="Heart" className={classes.heart} />
+                {liked ? "Liked" : "Like"}
               </button>
               <button className={`${classes.card_btn} ${classes.comment_btn}`}>
                 Comment
               </button>
             </div>
             <div className={classes.comments_container}>
-              <div className={classes.all_comments}>
-                <div className={classes.comment_wrapper}>
-                  <div className={classes.commenter_details}>
-                    <div className={classes.profile}>
-                      <img
-                        src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        alt="Profile"
-                      />
-                    </div>
-                    <h4 className={classes.commenter_name}>Srutheesh</h4>
-                    <p className={classes.date}>1 Week ago</p>
+              {imageData?.comments && imageData?.comments.length > 0 ? (
+                <>
+                  <div className={classes.all_comments}>
+                    {imageData?.comments?.map((comment, index) => (
+                      <React.Fragment key={index}>
+                        <div className={classes.comment_wrapper}>
+                          <div className={classes.commenter_details}>
+                            <div className={classes.profile}>
+                              <img
+                                src={comment?.commenterProfile}
+                                alt="Profile"
+                              />
+                            </div>
+                            <h4 className={classes.commenter_name}>
+                              {comment?.commenter}
+                            </h4>
+                            <p className={classes.date}>{comment?.date}</p>
+                          </div>
+                          <div className={classes.comment}>{comment?.text}</div>
+                        </div>
+                        {comment?.replies?.map((reply, index) => (
+                          <div
+                            key={index}
+                            className={`${classes.comment_wrapper} ${classes.reply_wrapper}`}
+                          >
+                            <div className={classes.commenter_details}>
+                              <div className={classes.profile}>
+                                <img
+                                  src={reply?.replierProfile}
+                                  alt="Profile"
+                                />
+                              </div>
+                              <h4 className={classes.commenter_name}>
+                                {reply?.replier}
+                              </h4>
+                              <p className={classes.date}>{reply?.date}</p>
+                            </div>
+                            <div className={classes.comment}>{reply?.text}</div>
+                          </div>
+                        ))}
+                      </React.Fragment>
+                    ))}
                   </div>
-                  <div className={classes.comment}>
-                    Nice Images....Good Work
-                  </div>
-                </div>
-                <div
-                  className={`${classes.comment_wrapper} ${classes.reply_wrapper}`}
-                >
-                  <div className={classes.commenter_details}>
-                    <div className={classes.profile}>
-                      <img
-                        src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        alt="Profile"
-                      />
-                    </div>
-                    <h4 className={classes.commenter_name}>Anitta K C</h4>
-                    <p className={classes.date}>1 Week ago</p>
-                  </div>
-                  <div className={classes.comment}>Thankuu....</div>
-                </div>
-                <div className={classes.comment_wrapper}>
-                  <div className={classes.commenter_details}>
-                    <div className={classes.profile}>
-                      <img
-                        src="https://images.pexels.com/photos/2773977/pexels-photo-2773977.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        alt="Profile"
-                      />
-                    </div>
-                    <h4 className={classes.commenter_name}>Simi K Sunny</h4>
-                    <p className={classes.date}>1 Week ago</p>
-                  </div>
-                  <div className={classes.comment}>
-                    Nice Work....{" "}
-                    <span className={classes.reply_btn}>Reply</span>
-                  </div>
-                </div>
-              </div>
-              <form action="" className={classes.input_form}>
+                </>
+              ) : (
+                <div className={classes.noComments}>No comments</div>
+              )}
+              <form
+                onSubmit={handleSubmitComment}
+                action=""
+                className={classes.input_form}
+              >
                 <div className={`${classes.profile} ${classes.userProfile}`}>
                   <img
                     src="https://images.pexels.com/photos/3764119/pexels-photo-3764119.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -111,8 +139,16 @@ export const ImagePopup = ({ handleCancel }) => {
                   id="comment"
                   placeholder="Write a comment..."
                   className={classes.input}
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
                 />
-                <img src={sendIcon} alt="Send" className={classes.send_icon} />
+                <button type="submit" className={classes.send_button}>
+                  <img
+                    src={sendIcon}
+                    alt="Send"
+                    className={classes.send_icon}
+                  />
+                </button>
               </form>
             </div>
           </div>

@@ -3,19 +3,55 @@ import classes from "./Gallery.module.css";
 import kababMenu from "../../assets/kebab-menu.svg";
 import { ImagePopup } from "../ImagePopup/ImagePopup";
 
-export const Gallery = ({ imageData }) => {
+export const Gallery = ({ imageData, setImageData }) => {
   const [show, setShow] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [likedImages, setLikedImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleOpenPopup = () => {
+  // Updating the imageData's comments
+  const updateImageDataComments = (newComment) => {
+    const updatedImageData = imageData.map((image) => {
+      if (image.id === selectedImage.id) {
+        return {
+          ...image,
+          comments: [...(image.comments || []), newComment],
+        };
+      }
+      return image;
+    });
+    setSelectedImage(
+      updatedImageData.find((image) => image.id === selectedImage.id)
+    );
+    setImageData(updatedImageData);
+  };
+
+  // ImagePopup Handling
+  const handleOpenPopup = (image) => {
     setShow(true);
+    setSelectedImage(image);
   };
   const handleClosePopup = () => {
     setShow(false);
+    setSelectedImage(null);
   };
 
+  const handleShowComments = () => {
+    setShowComments(!showComments);
+  };
+
+  // Like Function
+  const handleLikeImage = (id) => {
+    if (likedImages.includes(id)) {
+      setLikedImages(likedImages.filter((imageId) => imageId !== id));
+    } else {
+      setLikedImages([...likedImages, id]);
+    }
+  };
+
+  // Reversing the imageData
   const reversedImageData = [...imageData].reverse();
 
-  console.log(reversedImageData);
   return (
     <>
       <div className={classes.gallery_container}>
@@ -35,98 +71,112 @@ export const Gallery = ({ imageData }) => {
             <img src={image?.imageUrl} alt="Item" className={classes.picture} />
             <div className={classes.likes_container}>
               <div className={classes.profile_group}>
-                <div className={classes.profile}>
-                  <img
-                    src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Profile"
-                  />
-                </div>
-                <div className={classes.profile}>
-                  <img
-                    src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Profile"
-                  />
-                </div>
-                <div className={classes.profile}>
-                  <img
-                    src="https://images.pexels.com/photos/2773977/pexels-photo-2773977.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Profile"
-                  />
-                </div>
+                {profiles?.map((profile, index) => (
+                  <div key={index} className={classes.profile}>
+                    <img src={profile} alt="Profile" />
+                  </div>
+                ))}
               </div>
-              <p className={classes.liked_text}>{image?.likedBy}</p>
-              <p className={`${classes.liked_text} ${classes.commentCount}`}>
-                3 Comments
+              <p className={classes.liked_text}>
+                {likedImages.includes(image.id)
+                  ? `Liked by You and ${image.likedBy}`
+                  : `Liked by ${image.likedBy}`}
               </p>
+              {image?.comments && image?.comments.length > 0 && (
+                <p
+                  className={`${classes.liked_text} ${classes.commentCount}`}
+                  onClick={handleShowComments}
+                >
+                  {image?.comments.length}{" "}
+                  {image?.comments.length === 1 ? "Comment" : "Comments"}
+                </p>
+              )}
             </div>
             <div className={classes.btn_container}>
-              <button className={`${classes.card_btn} ${classes.like_btn}`}>
-                Like
+              <button
+                className={`${classes.card_btn} ${classes.like_btn} ${
+                  likedImages.includes(image.id) ? classes.liked : ""
+                }`}
+                onClick={() => handleLikeImage(image.id)}
+              >
+                {likedImages.includes(image.id) ? "Liked" : "Like"}
               </button>
               <button
                 className={`${classes.card_btn} ${classes.comment_btn}`}
-                onClick={handleOpenPopup}
+                onClick={() => handleOpenPopup(image)}
               >
                 Comment
               </button>
             </div>
-            {image?.isComment && (
+            {showComments && (
               <div className={classes.comments_container}>
-                <div className={classes.comment_wrapper}>
-                  <div className={classes.commenter_details}>
-                    <div className={`${classes.profile} ${classes.commenter}`}>
-                      <img
-                        src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        alt="Profile"
-                      />
+                {image?.comments?.map((comment, index) => (
+                  <React.Fragment key={index}>
+                    <div className={classes.comment_wrapper}>
+                      <div className={classes.commenter_details}>
+                        <div
+                          className={`${classes.profile} ${classes.commenter}`}
+                        >
+                          <img src={comment?.commenterProfile} alt="Profile" />
+                        </div>
+                        <h4 className={classes.commenter_name}>
+                          {comment?.commenter}
+                        </h4>
+                        <p className={classes.date}>{comment?.date}</p>
+                        <img
+                          src={kababMenu}
+                          alt="Menu"
+                          className={classes.menu}
+                        />
+                      </div>
+                      <div className={classes.comment}>{comment?.text}</div>
                     </div>
-                    <h4 className={classes.commenter_name}>Srutheesh</h4>
-                    <p className={classes.date}>1 Week ago</p>
-                    <img src={kababMenu} alt="Menu" className={classes.menu} />
-                  </div>
-                  <div className={classes.comment}>
-                    Nice Images....Good Work
-                  </div>
-                </div>
-                <div
-                  className={`${classes.comment_wrapper} ${classes.reply_wrapper}`}
-                >
-                  <div className={classes.commenter_details}>
-                    <div className={`${classes.profile} ${classes.commenter}`}>
-                      <img
-                        src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        alt="Profile"
-                      />
-                    </div>
-                    <h4 className={classes.commenter_name}>Anitta K C</h4>
-                    <p className={classes.date}>1 Week ago</p>
-                    <img src={kababMenu} alt="Menu" className={classes.menu} />
-                  </div>
-                  <div className={classes.comment}>Thankuu....</div>
-                </div>
-                <div className={classes.comment_wrapper}>
-                  <div className={classes.commenter_details}>
-                    <div className={`${classes.profile} ${classes.commenter}`}>
-                      <img
-                        src="https://images.pexels.com/photos/2773977/pexels-photo-2773977.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        alt="Profile"
-                      />
-                    </div>
-                    <h4 className={classes.commenter_name}>Simi K Sunny</h4>
-                    <p className={classes.date}>1 Week ago</p>
-                    <img src={kababMenu} alt="Menu" className={classes.menu} />
-                  </div>
-                  <div className={classes.comment}>
-                    Nice Work....{" "}
-                    <span className={classes.reply_btn}>Reply</span>
-                  </div>
-                </div>
+                    {comment?.replies?.map((reply, index) => (
+                      <div
+                        key={index}
+                        className={`${classes.comment_wrapper} ${classes.reply_wrapper}`}
+                      >
+                        <div className={classes.commenter_details}>
+                          <div
+                            className={`${classes.profile} ${classes.commenter}`}
+                          >
+                            <img src={reply?.replierProfile} alt="Profile" />
+                          </div>
+                          <h4 className={classes.commenter_name}>
+                            {reply?.replier}
+                          </h4>
+                          <p className={classes.date}>{reply?.date}</p>
+                          <img
+                            src={kababMenu}
+                            alt="Menu"
+                            className={classes.menu}
+                          />
+                        </div>
+                        <div className={classes.comment}>{reply?.text}</div>
+                      </div>
+                    ))}
+                  </React.Fragment>
+                ))}
               </div>
             )}
           </div>
         ))}
       </div>
-      {show && <ImagePopup handleCancel={handleClosePopup} />}
+      {show && (
+        <ImagePopup
+          imageData={selectedImage}
+          updateComments={updateImageDataComments}
+          handleCancel={handleClosePopup}
+          liked={likedImages.includes(selectedImage?.id)}
+          toggleLike={() => handleLikeImage(selectedImage?.id)}
+        />
+      )}
     </>
   );
 };
+
+const profiles = [
+  "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/2773977/pexels-photo-2773977.jpeg?auto=compress&cs=tinysrgb&w=600",
+];

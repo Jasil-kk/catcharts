@@ -6,6 +6,8 @@ import photographer from "../../assets/photographer.png";
 import { UploadImage } from "../UploadImage/UploadImage";
 
 export const Hero = ({ addImage }) => {
+
+  // passing the Selected image with other details to addImage
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -22,6 +24,9 @@ export const Hero = ({ addImage }) => {
         ];
         const description =
           descriptions[Math.floor(Math.random() * descriptions.length)];
+        const likedByOptions = ["You", "John", "Alice", "Bob", "Emma", "Kate"];
+        const likedByIndex = Math.floor(Math.random() * likedByOptions.length);
+        const likedBy = likedByOptions[likedByIndex];
         const currentDate = new Date();
         const options = {
           day: "2-digit",
@@ -41,8 +46,8 @@ export const Hero = ({ addImage }) => {
           postedDate,
           imageUrl,
           description,
-          likedBy: "", 
-          isComment: false, 
+          likedBy,
+          comments: [],
         };
         addImage(imageData);
       };
@@ -68,9 +73,7 @@ export const Hero = ({ addImage }) => {
       </div>
 
       <img src={backgroundBox} alt="" className={classes.left_box} />
-      <UploadImage addImage={addImage} />
+      <UploadImage handleFileChange={handleFileChange} />
     </div>
   );
 };
-
-// anchor

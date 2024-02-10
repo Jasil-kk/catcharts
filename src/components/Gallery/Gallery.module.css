@@ -116,6 +116,8 @@
 }
 .commentCount {
   margin-left: auto;
+  cursor: pointer;
+  user-select: none;
 }
 .btn_container {
   margin-top: 1.5rem;
@@ -137,8 +139,7 @@
   cursor: pointer;
   transition: all 0.4s ease-in;
 }
-.like_btn:hover,
-.like_btn:active {
+.liked {
   background-color: var(--coral-pink);
   color: var(--primary-white);
 }
@@ -219,4 +220,3 @@
   user-select: none;
   cursor: pointer;
 }
-

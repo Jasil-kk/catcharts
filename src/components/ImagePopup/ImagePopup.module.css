@@ -144,6 +144,10 @@
   width: 18px;
   height: 18px;
 }
+.like_btn {
+  background-color: #d78b7f;
+  color: #fff;
+}
 .comments_container {
   margin-top: 1rem;
   width: 100%;
@@ -162,6 +166,13 @@
   height: 305px;
   padding-right: 0.5rem;
   overflow: auto;
+}
+.noComments {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  height: 305px;
+  color: var(--black-overlay);
 }
 .all_comments::-webkit-scrollbar {
   width: 3px;
@@ -259,14 +270,20 @@
 .input::placeholder {
   color: var(--black-overlay);
 }
-.send_icon {
+.send_button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 1rem;
+  right: 0.875rem;
+  display: grid;
+  place-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.send_icon {
   width: 18px;
   height: 18px;
-  cursor: pointer;
 }
 .second_section {
   width: 100%;

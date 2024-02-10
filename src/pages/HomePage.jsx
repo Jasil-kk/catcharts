@@ -6,6 +6,7 @@ import { Gallery } from "../components/Gallery/Gallery";
 export const HomePage = () => {
   const [imageData, setImageData] = useState([]);
 
+  // Fetching the Image and Details from images.json
   useEffect(() => {
     fetch("/images.json")
       .then((response) => response.json())
@@ -13,16 +14,12 @@ export const HomePage = () => {
       .catch((error) => console.error("Error fetching JSON:", error));
   }, []);
 
-
+  // Adding New Item to the imageData  
   const addImage = (newImage) => {
-    // Update imageData state with the new image
     setImageData([...imageData, newImage]);
-
-    // You can also persist the updated imageData to localStorage here if needed
-    // localStorage.setItem('imageData', JSON.stringify([...imageData, newImage]));
   };
 
-
+  // Page Style
   const style = {
     width: "100%",
     height: "auto",
@@ -36,7 +33,7 @@ export const HomePage = () => {
     <div style={style}>
       <Header />
       <Hero addImage={addImage} />
-      <Gallery imageData={imageData}/>
+      <Gallery imageData={imageData} setImageData={setImageData}/>
     </div>
   );
 };
